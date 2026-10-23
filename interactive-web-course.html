@@ -1706,15 +1706,7 @@ var speakingBtn = null;
 function cleanForSpeech(t){
   return (t||'').replace(/\s+/g,' ').replace(/NTA-8776/g,'N T A 8776').replace(/&/g,' and ').trim();
 }
-function pickVoice(){
-  if(!window.speechSynthesis) return null;
-  var vs = speechSynthesis.getVoices() || [];
-  var pref = ['Samantha','Google US English','Microsoft Zira','Karen','Moira','Tessa'];
-  for(var i=0;i<pref.length;i++){ for(var j=0;j<vs.length;j++){ if(vs[j].name.indexOf(pref[i])===0 && /^en/.test(vs[j].lang)) return vs[j]; } }
-  for(var k=0;k<vs.length;k++){ if(/^en[-_]US/i.test(vs[k].lang)) return vs[k]; }
-  for(var m=0;m<vs.length;m++){ if(/^en/.test(vs[m].lang)) return vs[m]; }
-  return vs[0] || null;
-}
+function pickVoice(){   if(!window.speechSynthesis) return null;   var vs = speechSynthesis.getVoices() || [];   if(!vs.length) return null;   function isEn(v){ return /^en([-_]|$)/i.test(v.lang || ""); }   function named(v, n){ return v.name.toLowerCase().indexOf(n) === 0; }   var pref = ["microsoft aria","microsoft jenny","microsoft ana","microsoft michelle","google us english","samantha","ava","zoe","karen","moira","tessa","google uk english female","microsoft zira"];   var i, j;   for(i=0;i<pref.length;i++){ for(j=0;j<vs.length;j++){ if(isEn(vs[j]) && named(vs[j], pref[i])) return vs[j]; } }   for(i=0;i<vs.length;i++){ var nm = vs[i].name.toLowerCase(); if(isEn(vs[i]) && (nm.indexOf("natural")!==-1 || nm.indexOf("neural")!==-1 || nm.indexOf("premium")!==-1 || nm.indexOf("enhanced")!==-1)) return vs[i]; }   for(i=0;i<vs.length;i++){ if(/^en[-_]US/i.test(vs[i].lang || "")) return vs[i]; }   for(i=0;i<vs.length;i++){ if(isEn(vs[i])) return vs[i]; }   return vs[0] || null; }
 if(window.speechSynthesis && speechSynthesis.onvoiceschanged !== undefined){ speechSynthesis.onvoiceschanged = function(){}; }
 function speak(text, btn){
   text = cleanForSpeech(text);
