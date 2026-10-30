@@ -7,11 +7,11 @@
   const list = document.getElementById('lessonList');
   if (list) list.innerHTML = window.LESSONS.map((l, i) => {
     const d = done.includes(l.n);
-    return `<li class="rv" style="--rd:${i * 60}ms"><a href="/learn/#${l.n}" class="${d ? 'done' : ''}"><span class="n">0${l.n}</span><div><h3>${l.title}</h3><p>${l.blurb}</p></div><span class="go"><span>${d ? 'Done' : l.mins + ' min'}</span><b>${d ? check : arrow}</b></span></a></li>`;
+    return `<li class="rv" style="--rd:${i * 60}ms"><a href="learn/#${l.n}" class="${d ? 'done' : ''}"><span class="n">0${l.n}</span><div><h3>${l.title}</h3><p>${l.blurb}</p></div><span class="go"><span>${d ? 'Done' : l.mins + ' min'}</span><b>${d ? check : arrow}</b></span></a></li>`;
   }).join('');
   if (done.length && done.length < 6) {
     const next = window.LESSONS.find(l => !done.includes(l.n));
-    document.querySelectorAll('a[href="/learn/#1"]').forEach(a => { a.href = '/learn/#' + next.n; if (/Start lesson 1/.test(a.textContent)) a.firstChild.textContent = 'Keep going: lesson ' + next.n + ' '; });
+    document.querySelectorAll('a[href="learn/#1"]').forEach(a => { a.href = 'learn/#' + next.n; if (/Start lesson 1/.test(a.textContent)) a.firstChild.textContent = 'Keep going: lesson ' + next.n + ' '; });
   }
   const els = document.querySelectorAll('.rv');
   if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { els.forEach(e => e.classList.add('in')); return; }

@@ -37,7 +37,7 @@
   function picker() {
     lesson = null; bar.hidden = true; top.hidden = true; document.title = 'Lessons · Ride Smart';
     const done = store.get('rs-done', []);
-    stage.innerHTML = `<div class="card pick-lesson"><a class="icon-btn" href="/" aria-label="Home" style="margin-bottom:24px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></a><p class="kick">Ride Smart</p><h1>Pick a lesson</h1><ol class="ll" style="margin-top:28px">${L.map(l => `<li><a href="#${l.n}" class="${done.includes(l.n) ? 'done' : ''}"><span class="n">0${l.n}</span><div><h3>${l.title}</h3><p>${l.blurb}</p></div><span class="go"><b>${arrow}</b></span></a></li>`).join('')}</ol></div>`;
+    stage.innerHTML = `<div class="card pick-lesson"><a class="icon-btn" href="../index.html" aria-label="Home" style="margin-bottom:24px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></a><p class="kick">Ride Smart</p><h1>Pick a lesson</h1><ol class="ll" style="margin-top:28px">${L.map(l => `<li><a href="#${l.n}" class="${done.includes(l.n) ? 'done' : ''}"><span class="n">0${l.n}</span><div><h3>${l.title}</h3><p>${l.blurb}</p></div><span class="go"><b>${arrow}</b></span></a></li>`).join('')}</ol></div>`;
   }
 
   function render() {
@@ -140,12 +140,12 @@
       const vals = Object.values(res), score = vals.length ? `<p class="body">${vals.filter(Boolean).length} of ${vals.length} right on the first try.</p>` : '';
       if (c.final) {
         const name = store.get('rs-name', 'Ride Smart rider');
-        el.innerHTML = `<p class="kick">Course complete</p><h1 class="done-big">You're ride ready.</h1>${score}<div class="cert"><p class="kick">Certificate</p><p class="nm">${esc(name)}</p><p>completed all six Ride Smart e-bike safety lessons and took the pledge. ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p></div><div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px"><button type="button" class="btn btn-vis" id="dl">Download certificate</button><a class="btn btn-ghost" href="/parents/">Show your parent the gear list</a></div>`;
+        el.innerHTML = `<p class="kick">Course complete</p><h1 class="done-big">You're ride ready.</h1>${score}<div class="cert"><p class="kick">Certificate</p><p class="nm">${esc(name)}</p><p>completed all six Ride Smart e-bike safety lessons and took the pledge. ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p></div><div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px"><button type="button" class="btn btn-vis" id="dl">Download certificate</button><a class="btn btn-ghost" href="../parents/">Show your parent the gear list</a></div>`;
         el.querySelector('#dl').addEventListener('click', () => certificate(name));
-        next.textContent = 'Back to home'; onNext = () => { location.href = '/'; };
+        next.textContent = 'Back to home'; onNext = () => { location.href = '../index.html'; };
       } else {
         el.innerHTML = `<p class="kick">Lesson ${lesson.n} of 6</p><h1 class="done-big">Done.</h1>${score}${nl ? `<a class="done-next" href="#${nl.n}"><div><small>Up next · ${nl.mins} min</small><b>${nl.title}</b></div><span class="icon-btn" style="background:var(--vis)">${arrow}</span></a>` : ''}`;
-        next.textContent = nl ? `Lesson ${nl.n}` : 'Home'; onNext = () => { nl ? (location.hash = '#' + nl.n) : (location.href = '/'); };
+        next.textContent = nl ? `Lesson ${nl.n}` : 'Home'; onNext = () => { nl ? (location.hash = '#' + nl.n) : (location.href = '../index.html'); };
       }
     },
   };
