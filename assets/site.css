@@ -351,3 +351,15 @@ h2.reading{box-shadow:none;background:linear-gradient(transparent 62%,var(--vis)
 .solid{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .solid li{padding:8px 14px;border-radius:999px;background:#e3f6e9;color:#16733e;font-weight:600;font-size:14px}
 .rc-res .plan{margin-top:26px}
+
+/* ---------- why us + groups ---------- */
+.why{background:var(--ink);color:var(--paper);padding-block:clamp(40px,6vw,72px)}
+.why-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,4vw,56px)}
+.why-n{font:800 clamp(1.8rem,3.6vw,2.6rem)/1 var(--disp);font-stretch:118%;color:var(--vis);text-transform:uppercase}
+.why h3{margin-top:12px;font-size:1.2rem;text-transform:none;font-stretch:105%;line-height:1.2}
+.why p:not(.why-n){margin-top:8px;color:var(--mute2);font-size:15.5px}
+@media (max-width:760px){.why-grid{grid-template-columns:1fr}}
+.tools-light{list-style:none;margin:24px 0 0;padding:0}
+.tools-light li{padding:14px 0;box-shadow:0 1px 0 var(--line)}
+.tools-light b{display:block}
+.tools-light span{color:var(--mute);font-size:15px}

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ride Smart · E-bike safety for riders 7–12</title>
-<meta name="description" content="Six short e-bike safety lessons for kids 7 to 12, with narration on every card: gear, signs, road rules, sidewalks and parking lots. Plus a parent section for gear, recalls and state laws.">
+<title>Ride Smart · The e-bike safety course built for kids 7–12</title>
+<meta name="description" content="The e-bike safety course built for kids 7 to 12, read out loud. Six short guided lessons on gear, signs, road rules, sidewalks and parking lots, plus parent tools for helmets, recalls, state laws and charging. Free for families.">
 <meta name="theme-color" content="#0f1110">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="https://images.unsplash.com/photo-1751621573600-87de62f3eff3?auto=format&fit=crop&w=1800&q=70">
-<link rel="stylesheet" href="assets/site.css?v=3">
+<link rel="stylesheet" href="assets/site.css?v=4">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -29,14 +29,22 @@
   <section class="hero">
     <img src="https://images.unsplash.com/photo-1751621573600-87de62f3eff3?auto=format&fit=crop&w=1800&q=70" alt="A young rider in a helmet riding a bike on a track" fetchpriority="high">
     <div class="wrap">
-      <p class="kick rise"><i></i>E-bike safety · Ages 7–12</p>
-      <h1 class="h-xl rise" style="--d:1">Ride further. Ride smart.</h1>
-      <p class="lede rise" style="--d:2">For parents who want their kid to really get it: road rules, the right gear, bike checks and battery safety. Six short guided lessons for kids 7 to 12, read out loud, with games, quick checks and a certificate.</p>
+      <p class="kick rise"><i></i>The e-bike safety course for kids 7–12</p>
+      <h1 class="h-xl rise" style="--d:1">Built for kids. Read out loud.</h1>
+      <p class="lede rise" style="--d:2">Most e-bike courses start at 12. Ride Smart is made for younger riders: six short guided lessons on road rules, gear, bike checks and battery safety, with every card read out loud so kids who are still learning to read can keep up.</p>
       <div class="cta rise" style="--d:3">
         <a class="btn btn-vis" href="#paths">Find your starting point <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn btn-ghost" href="learn/#1">Start lesson 1</a>
       </div>
-      <div class="facts rise" style="--d:4"><span>6 lessons</span><span>Every card read out loud</span><span>Certificate at the end</span></div>
+      <div class="facts rise" style="--d:4"><span>Free for families</span><span>Every card read out loud</span><span>Certificate at the end</span></div>
+    </div>
+  </section>
+
+  <section class="why">
+    <div class="wrap why-grid">
+      <div class="rv"><p class="why-n">7–12</p><h3>Made for younger riders</h3><p>Teen courses talk to 13-year-olds. These lessons are written for kids 7 to 12, one idea at a time.</p></div>
+      <div class="rv" style="--rd:80ms"><p class="why-n">Every card</p><h3>Read out loud</h3><p>A voice reads each card, question and answer, so reading level never gets in the way.</p></div>
+      <div class="rv" style="--rd:160ms"><p class="why-n">Parent tools</p><h3>Beyond the lessons</h3><p>Helmet buying, a sized gear list, a recall check, your state's laws and charging rules.</p></div>
     </div>
   </section>
 
@@ -82,10 +90,38 @@
     </div>
   </section>
 
+  <section class="sec" id="groups">
+    <div class="wrap p-grid">
+      <div>
+        <p class="kick mute rv">Schools, PTAs, cities and bike shops</p>
+        <h2 class="rv" style="margin-top:12px;font-size:clamp(2rem,4.4vw,3.2rem);text-transform:uppercase">Bring Ride Smart to your kids.</h2>
+        <p class="lede mute rv" style="margin-top:14px">More schools now ask for a safety course before kids ride to campus, and most courses start at 12. Ride Smart covers the younger grades.</p>
+        <ul class="tools-light rv">
+          <li><b>Schools and PTAs</b><span>A class link, the certificate, and a parent night handout</span></li>
+          <li><b>Cities and police</b><span>Share it with families before summer and back-to-school</span></li>
+          <li><b>Bike shops and kids' e-bike brands</b><span>Hand it to every family that buys a bike</span></li>
+        </ul>
+      </div>
+      <form class="panel" name="ridesmart-partners" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="partnerForm">
+        <input type="hidden" name="form-name" value="ridesmart-partners">
+        <p class="sr"><label>Leave empty <input name="bot-field"></label></p>
+        <div class="form-grid">
+          <label class="fld">Your name<input name="name" autocomplete="name" required></label>
+          <label class="fld">Email<input name="email" type="email" autocomplete="email" required></label>
+          <label class="fld full">You're with<select name="org_type" required><option value="">Choose one…</option><option>School or district</option><option>PTA or parent group</option><option>City or police department</option><option>Bike shop or e-bike brand</option><option>Other</option></select></label>
+          <label class="fld full">Organization <small>(optional)</small><input name="org" autocomplete="organization"></label>
+          <label class="fld full">What would help? <small>(optional)</small><input name="message" placeholder="e.g. 3rd to 5th grade, about 400 kids"></label>
+        </div>
+        <button class="btn btn-ink" type="submit">Get in touch</button>
+        <p class="note" id="partnerMsg" role="status"></p>
+      </form>
+    </div>
+  </section>
+
   <section class="band">
     <div class="wrap">
       <h2 class="h-l rv">Helmet on. Let's go.</h2>
-      <p class="lede mute rv" style="margin:16px auto 0">Lesson 1 is gear. It takes about five minutes.</p>
+      <p class="lede mute rv" style="margin:16px auto 0">Lesson 1 is gear. It takes about five minutes. Turning 12 and riding more? Finish here, then move up to a teen course.</p>
       <div class="cta rv"><a class="btn btn-ink" href="learn/#1">Start lesson 1 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
     </div>
   </section>
@@ -102,5 +138,6 @@
 <script src="assets/paths.js?v=1"></script>
 <script src="assets/home-paths.js?v=1"></script>
 <script src="assets/home.js?v=1"></script>
+<script src="assets/partners.js?v=1"></script>
 </body>
 </html>
