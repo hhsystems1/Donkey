@@ -1,6 +1,12 @@
 [build]
   publish = "."
 
+# Jo's Lesson 1 studio narration, served from the Oct 30 deploy
+[[redirects]]
+  from = "/rec/*"
+  to = "https://6ae29c92f32faa6df62719b9--ride-smart-adventure.netlify.app/course/media/:splat"
+  status = 200
+
 # old URLs from the first version
 [[redirects]]
   from = "/course/*"

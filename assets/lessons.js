@@ -3,7 +3,7 @@
 // Card types: intro, idea, flip, check, sort, spot, quiz, pledge, done.
 // "learn" cards are shorthand: each point [title, line, icon] becomes its own idea card.
 const IMG = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1400&q=70`;
-const REC = n => `https://6ae29c92f32faa6df62719b9--ride-smart-adventure.netlify.app/course/media/guided-step-${n}.mp3`;
+const REC = n => `../rec/guided-step-${n}.mp3`; // proxied to Jo's recordings on the Oct 30 deploy (see netlify.toml)
 window.LESSONS = [
 {
   n: 1, slug: 'gear', title: 'Gear up', blurb: 'Helmet fit, the rest of your gear, and a bike check.', mins: 5,

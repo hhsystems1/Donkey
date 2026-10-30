@@ -40,7 +40,8 @@
       stop(); const t = token; speakBtn.setAttribute('aria-pressed', 'true');
       if (src) {
         audio = new Audio(src);
-        await new Promise(ok => { audio.onended = audio.onerror = ok; audio.play().catch(ok); });
+        const okd = await new Promise(ok => { audio.onended = () => ok(true); audio.onerror = () => ok(false); audio.play().catch(e => ok(e.name === 'NotAllowedError' ? 'blocked' : false)); });
+        if (okd === false && t === token) for (const p of parts) { p.el?.classList.add('reading'); await sayOne(p.text, t); p.el?.classList.remove('reading'); }
       } else for (const p of parts) {
         if (t !== token) break;
         p.el?.classList.add('reading'); await sayOne(p.text, t); p.el?.classList.remove('reading');
