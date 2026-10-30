@@ -4,7 +4,7 @@ const IMG = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&
 window.LESSONS = [
 {
   n: 1, slug: 'gear', title: 'Gear up', blurb: 'Helmet fit, the rest of your kit, and a 30-second bike check.', mins: 5,
-  img: IMG('1785009736899-0780baa0f390'), alt: 'A rider in a white helmet and pads',
+  img: IMG('1773521478927-47b76d603a23'), alt: 'A rider in a helmet with a backpack',
   cards: [
     { t: 'intro', title: 'Gear up', body: 'An e-bike is heavier and quicker than a regular bike, so a crash hits harder. Your gear has to keep up. Here is what to wear, how to fit it, and what to check before you roll.' },
     { t: 'learn', kick: 'The helmet', title: 'Fit beats price', pts: [

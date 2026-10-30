@@ -84,7 +84,7 @@ p{margin:0}
 .ll{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .ll a{position:relative;display:grid;grid-template-columns:clamp(64px,10vw,120px) minmax(0,1fr) auto;align-items:center;gap:clamp(14px,3vw,36px);padding:clamp(18px,2.6vw,28px) clamp(18px,3vw,32px);border-radius:var(--r);background:#fff;text-decoration:none;overflow:hidden;isolation:isolate;transition:transform 200ms var(--ease)}
 .ll a::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--ink);transform:scaleY(0);transform-origin:50% 100%;transition:transform 380ms var(--ease)}
-.ll .n{font:800 clamp(2.4rem,5.6vw,4.4rem)/.85 var(--disp);font-stretch:125%;color:var(--paper2);transition:color 300ms ease}
+.ll .n{font:800 clamp(2.4rem,5.6vw,4.4rem)/.85 var(--disp);font-stretch:125%;color:#c9c5b7;transition:color 300ms ease}
 .ll h3{font-size:clamp(1.3rem,2.6vw,1.9rem);text-transform:uppercase;transition:color 300ms ease}
 .ll p{margin-top:6px;color:var(--mute);font-size:15.5px;transition:color 300ms ease}
 .ll .go{display:flex;align-items:center;gap:12px;font-weight:700;font-size:14px;color:var(--mute);white-space:nowrap;transition:color 300ms ease}
@@ -207,7 +207,8 @@ p{margin:0}
 .card h1,.card h2{font-size:clamp(2.2rem,8.4vw,3.8rem);text-transform:uppercase;margin-top:12px}
 .card .body{margin-top:16px;font-size:1.12rem;max-width:56ch}
 .c-img{margin:6px 0 22px;border-radius:20px;overflow:hidden;aspect-ratio:16/10;background:var(--ink2)}
-.c-img img{width:100%;height:100%;object-fit:cover}
+.c-img img{width:100%;height:100%;object-fit:cover;animation:imgIn 700ms ease both}
+@keyframes imgIn{from{opacity:0}to{opacity:1}}
 .pts{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:10px}
 .pts li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;padding:18px;border-radius:var(--r);background:#fff}
 .pts li::before{content:attr(data-n);width:40px;height:40px;border-radius:12px;background:var(--ink);color:var(--vis);display:grid;place-items:center;font:800 16px var(--disp);font-stretch:120%}
