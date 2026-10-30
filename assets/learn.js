@@ -20,11 +20,46 @@
     full: `<svg class="sign" viewBox="0 0 100 100" aria-hidden="true"><rect x="14" y="2" width="72" height="96" rx="6" fill="#fff" stroke="#111" stroke-width="3"/>${bike('#111', 23, 0, .54)}<text text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="10.5" fill="#111"><tspan x="50" y="56">BIKES MAY</tspan><tspan x="50" y="70">USE</tspan><tspan x="50" y="84">FULL LANE</tspan></text></svg>`,
   };
 
+  // ---- narrator: Jo's studio recordings where they exist, otherwise the device's most natural voice ----
+  const N = (() => {
+    let audio = null, gesture = false, on = store.get('rs-sound', true), token = 0, voice = null;
+    const pickVoice = () => {
+      const vs = (speechSynthesis?.getVoices() || []).filter(v => /^en(-|_)US/i.test(v.lang));
+      voice = vs.find(v => /natural|neural|online/i.test(v.name) && /aria|jenny|ava|guy|emma/i.test(v.name)) || vs.find(v => /samantha|ava|allison|google us english/i.test(v.name)) || vs.find(v => v.localService === false) || vs[0] || null;
+    };
+    if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+    addEventListener('pointerdown', () => { gesture = true; }, { capture: true });
+    const stop = () => { token++; if (audio) { audio.pause(); audio = null; } speechSynthesis?.cancel(); speakBtn.setAttribute('aria-pressed', 'false'); };
+    const sayOne = (text, t) => new Promise(ok => {
+      if (!('speechSynthesis' in window) || t !== token) return ok();
+      const u = new SpeechSynthesisUtterance(text); if (voice) u.voice = voice; u.rate = .95; u.pitch = 1.05;
+      u.onend = u.onerror = () => ok(); speechSynthesis.speak(u);
+    });
+    // parts: [{text, el}] spoken in order, highlighting el while it is read
+    async function play(src, parts) {
+      stop(); const t = token; speakBtn.setAttribute('aria-pressed', 'true');
+      if (src) {
+        audio = new Audio(src);
+        await new Promise(ok => { audio.onended = audio.onerror = ok; audio.play().catch(ok); });
+      } else for (const p of parts) {
+        if (t !== token) break;
+        p.el?.classList.add('reading'); await sayOne(p.text, t); p.el?.classList.remove('reading');
+      }
+      if (t === token) speakBtn.setAttribute('aria-pressed', 'false');
+    }
+    return {
+      stop, play,
+      auto(src, parts) { if (on && gesture) play(src, parts); },
+      get on() { return on; }, toggle() { on = !on; store.set('rs-sound', on); if (!on) stop(); return on; },
+    };
+  })();
+  let parts = () => [];
+
   // ---- state ----
   let lesson = null, idx = 0, ready = true, dir = 1, res = {}, onNext = null;
 
   function route() {
-    speechSynthesis?.cancel(); speakBtn.setAttribute('aria-pressed', 'false');
+    N.stop();
     const m = location.hash.match(/^#(\d)(?:\/(\d+))?$/);
     const l = m && L.find(x => x.n === +m[1]);
     if (!l) return picker();
@@ -47,66 +82,79 @@
     segs.innerHTML = lesson.cards.map((_, i) => `<i class="${i < idx ? 'on' : i === idx ? 'now' : ''}"></i>`).join('');
     count.textContent = `Lesson ${lesson.n}/6`;
     back.style.visibility = idx ? 'visible' : 'hidden';
-    ready = true; onNext = null; next.textContent = 'Next';
-    const el = document.createElement('div'); el.className = 'card' + (dir < 0 ? ' back' : '') + (c.t === 'warn' ? ' warn' : '');
+    ready = true; onNext = null; next.textContent = 'Next'; parts = () => [];
+    const el = document.createElement('div'); el.className = 'card' + (dir < 0 ? ' back' : '') + (c.warn ? ' warn' : '');
     (TYPES[c.t] || TYPES.learn)(el, c);
     stage.replaceChildren(el);
     if (idx === total - 1 && c.t !== 'done') next.textContent = 'Finish';
     sync(); scrollTo(0, 0);
+    N.auto(c.audio, parts());
     el.querySelector('h1,h2')?.setAttribute('tabindex', '-1');
     if (dir) el.querySelector('h1,h2')?.focus({ preventScroll: true });
   }
   const sync = () => { next.disabled = !ready; };
   const setReady = v => { ready = v; sync(); };
+  const P = (sel, el) => [...el.querySelectorAll(sel)].map(e => ({ text: e.textContent.trim(), el: e })).filter(x => x.text);
   const head = c => `${c.kick ? `<p class="kick">${esc(c.kick)}</p>` : ''}<h2>${esc(c.title)}</h2>${c.body ? `<p class="body">${esc(c.body)}</p>` : ''}`;
   const pts = (list) => `<ol class="pts">${list.map(([b, s], i) => `<li data-n="${i + 1}"><div><b>${esc(b)}</b><span>${esc(s)}</span></div></li>`).join('')}</ol>`;
 
   const TYPES = {
     intro(el, c) {
-      el.innerHTML = `<div class="c-img"><img src="${lesson.img}" alt="${esc(lesson.alt)}"></div><p class="kick">Lesson ${lesson.n} of 6 · about ${lesson.mins} min</p><h1>${esc(c.title)}</h1><p class="body">${esc(c.body)}</p>`;
-      next.textContent = "Let's go";
+      el.innerHTML = `<div class="c-img"><img src="${lesson.img}" alt="${esc(lesson.alt)}"></div><p class="kick">Lesson ${lesson.n} of 6 · about ${lesson.mins} min</p><h1>${esc(c.title)}</h1><p class="body">${esc(c.body)}</p><button type="button" class="hear-big"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>Tap to listen</button>`;
+      el.querySelector('.hear-big').addEventListener('click', () => N.play(c.audio, parts()));
+      next.textContent = "Let's go"; parts = () => [{ text: c.say || (c.title + '. ' + c.body) }];
+    },
+    idea(el, c) {
+      el.innerHTML = `<div class="idea-pic${c.warn ? ' warn' : ''}">${(window.ICONS || {})[c.ic] || ''}</div><p class="kick">${esc(c.kick || '')}${c.step ? ` · ${c.step}` : ''}</p><h2>${esc(c.title)}</h2><p class="body">${esc(c.line)}</p>`;
+      parts = () => P('h2,.body', el);
     },
     learn(el, c) { el.innerHTML = head(c) + pts(c.pts) + (c.tip ? `<p class="tip">${c.tip}</p>` : ''); },
     warn(el, c) { TYPES.learn(el, c); },
     flip(el, c) {
       let seen = 0;
+      parts = () => P('h2', el).concat([{ text: 'Tap each sign to hear what it means.' }]);
       el.innerHTML = head(c) + `<div class="tiles">${c.items.map(([k, n], i) => `<button type="button" class="tile" data-i="${i}" aria-expanded="false">${SIGNS[k] || ''}<b>${esc(n)}</b><small hidden></small><span class="hint">Tap to see</span><span class="ck" aria-hidden="true"></span></button>`).join('')}</div><p class="score" id="sc">0 of ${c.items.length} seen</p>`;
       el.querySelectorAll('.tile').forEach(t => t.addEventListener('click', () => {
         const it = c.items[+t.dataset.i], s = t.querySelector('small');
-        if (!t.classList.contains('open')) { seen++; t.classList.add('open'); s.textContent = it[2]; s.hidden = false; t.querySelector('.hint').remove(); t.setAttribute('aria-expanded', 'true'); el.querySelector('#sc').textContent = seen === c.items.length ? 'All 8. Nice.' : `${seen} of ${c.items.length} seen`; }
+        if (!t.classList.contains('open')) { seen++; t.classList.add('open'); s.textContent = it[2]; s.hidden = false; t.querySelector('.hint').remove(); t.setAttribute('aria-expanded', 'true'); N.on && N.play(null, [{ text: it[1] + '. ' + it[2] }]); el.querySelector('#sc').textContent = seen === c.items.length ? 'All 8. Nice.' : `${seen} of ${c.items.length} seen`; }
       }));
     },
     check(el, c) {
       let n = 0;
-      el.innerHTML = head(c) + `<div class="tiles one">${c.items.map(([b, s]) => `<button type="button" class="tile list" aria-pressed="false"><b>${esc(b)}</b><small>${esc(s)}</small><span class="ck" aria-hidden="true"></span></button>`).join('')}</div><p class="score" id="sc">0 of ${c.items.length}</p>`;
+      el.innerHTML = head(c) + `<div class="tiles">${c.items.map(([b, s, ic]) => `<button type="button" class="tile pic" aria-pressed="false"><span class="tpic">${(window.ICONS || {})[ic] || ''}</span><b>${esc(b)}</b>${s ? `<small>${esc(s)}</small>` : ''}<span class="ck" aria-hidden="true"></span></button>`).join('')}</div><p class="score" id="sc">0 of ${c.items.length}</p>`;
+      parts = () => P('h2,.body', el);
       el.querySelectorAll('.tile').forEach(t => t.addEventListener('click', () => {
         const on = !t.classList.contains('hit'); t.classList.toggle('hit', on); t.setAttribute('aria-pressed', on); n += on ? 1 : -1;
-        el.querySelector('#sc').textContent = n === c.items.length ? 'Ready to roll.' : `${n} of ${c.items.length}`;
+        if (on && N.on) N.play(null, [{ text: t.querySelector('b').textContent }]);
+        el.querySelector('#sc').textContent = n === c.items.length ? (c.done || 'All done!') : `${n} of ${c.items.length}`;
+        if (n === c.items.length && N.on) setTimeout(() => N.play(null, [{ text: c.done || 'All done!' }]), 700);
       }));
     },
     sort(el, c) {
       let i = 0, right = 0; setReady(false);
       el.innerHTML = head(c) + `<div class="sort"><p class="q" id="sq"></p><div class="row"><button type="button" class="yes" data-v="1">Safe</button><button type="button" class="no" data-v="0">Not safe</button></div><p class="fb" id="sf"></p><div class="pips">${c.items.map(() => '<i></i>').join('')}</div></div>`;
       const q = el.querySelector('#sq'), fb = el.querySelector('#sf'), pips = el.querySelectorAll('.pips i'), btns = el.querySelectorAll('.row button');
-      const show = () => { q.textContent = c.items[i][0]; fb.textContent = ''; btns.forEach(b => b.disabled = false); };
+      const show = (first) => { q.textContent = c.items[i][0]; fb.textContent = ''; btns.forEach(b => b.disabled = false); if (!first && N.on) N.play(null, [{ text: c.items[i][0] + '. Safe, or not safe?' }]); };
+      parts = () => P('h2', el).concat([{ text: c.items[0][0] + '. Safe, or not safe?' }]);
       btns.forEach(b => b.addEventListener('click', () => {
         const [, safe, why] = c.items[i], ok = (b.dataset.v === '1') === safe;
         btns.forEach(x => x.disabled = true); if (ok) right++;
         pips[i].className = ok ? 'ok' : 'bad';
-        fb.innerHTML = `<b>${ok ? 'Right.' : safe ? 'Actually, that one\'s safe.' : 'Not safe.'}</b> ${esc(why.replace(/^Right\.\s*/, ''))}`;
+        fb.innerHTML = `<b>${ok ? 'Right!' : safe ? 'That one is safe.' : 'Not safe.'}</b> ${esc(why)}`; if (N.on) N.play(null, [{ text: fb.textContent }]);
         i++;
-        if (i < c.items.length) setTimeout(show, RM ? 600 : 1700);
-        else setTimeout(() => { q.textContent = `${right} of ${c.items.length} right.`; fb.textContent = right === c.items.length ? 'Clean sweep.' : 'Good enough to move on. The rule: when in doubt, walk it.'; setReady(true); }, RM ? 600 : 1700);
+        if (i < c.items.length) setTimeout(() => show(false), RM ? 900 : 3200);
+        else setTimeout(() => { q.textContent = `${right} of ${c.items.length} right.`; fb.textContent = right === c.items.length ? 'You got them all!' : 'Remember: when in doubt, walk it.'; setReady(true); if (N.on) N.play(null, [{ text: q.textContent + ' ' + fb.textContent }]); }, RM ? 900 : 3200);
       }));
-      show();
+      show(true);
     },
     spot(el, c) {
       const need = c.items.filter(x => x[1]).length; let got = 0; setReady(false);
-      el.innerHTML = head(c) + `<div class="tiles">${c.items.map(([n], i) => `<button type="button" class="tile" data-i="${i}"><b>${esc(n)}</b><small hidden></small><span class="ck" aria-hidden="true"></span></button>`).join('')}</div><p class="score" id="sc">0 of ${need} found</p>`;
+      parts = () => P('h2', el).concat([{ text: 'Tap the five things that could hurt you.' }]);
+      el.innerHTML = head(c) + `<div class="tiles">${c.items.map(([n, , , ic], i) => `<button type="button" class="tile pic" data-i="${i}"><span class="tpic">${(window.ICONS || {})[ic] || ''}</span><b>${esc(n)}</b><small hidden></small><span class="ck" aria-hidden="true"></span></button>`).join('')}</div><p class="score" id="sc">0 of ${need} found</p>`;
       el.querySelectorAll('.tile').forEach(t => t.addEventListener('click', () => {
         const [, bad, why] = c.items[+t.dataset.i], s = t.querySelector('small');
         if (t.classList.contains('hit')) return;
-        s.textContent = why; s.hidden = false;
+        s.textContent = why; s.hidden = false; if (N.on) N.play(null, [{ text: (bad ? 'Danger! ' : 'Not a danger. ') + why }]);
         if (bad) { t.classList.add('hit'); got++; el.querySelector('#sc').textContent = got === need ? 'All 5 spotted.' : `${got} of ${need} found`; if (got === need) setReady(true); }
         else { t.classList.remove('miss'); void t.offsetWidth; t.classList.add('miss'); }
       }));
@@ -116,13 +164,14 @@
       const qn = lesson.cards.slice(0, idx + 1).filter(x => x.t === 'quiz').length, qt = lesson.cards.filter(x => x.t === 'quiz').length;
       el.innerHTML = `<p class="kick">Quick check · ${qn} of ${qt}</p><h2 style="font-size:clamp(1.7rem,6vw,2.6rem);text-transform:none;font-stretch:108%;line-height:1.08">${esc(c.q)}</h2><div class="opts">${c.o.map((o, i) => `<button type="button" class="opt" data-i="${i}">${esc(o)}</button>`).join('')}</div><p class="why" hidden></p>`;
       const why = el.querySelector('.why');
+      parts = () => [{ text: c.q, el: el.querySelector('h2') }, ...[...el.querySelectorAll('.opt')].map((e, i, a) => ({ text: (i === a.length - 1 ? 'or, ' : '') + e.textContent, el: e }))];
       el.querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => {
         const i = +b.dataset.i; tries++;
         if (i === c.a) {
           b.classList.add('right'); el.querySelectorAll('.opt').forEach(x => x.disabled = true);
           if (!(me in res)) res[me] = tries === 1;
-          why.innerHTML = `<b>${tries === 1 ? 'Yes.' : 'Got it.'}</b> ${esc(c.why)}`; why.hidden = false; setReady(true);
-        } else { if (!(me in res)) res[me] = false; b.classList.add('wrong'); b.disabled = true; why.innerHTML = '<b>Not that one.</b> Try again.'; why.hidden = false; }
+          why.innerHTML = `<b>${tries === 1 ? 'Yes!' : 'You got it!'}</b> ${esc(c.why)}`; why.hidden = false; setReady(true); if (N.on) N.play(null, [{ text: why.textContent }]);
+        } else { if (!(me in res)) res[me] = false; b.classList.add('wrong'); b.disabled = true; why.innerHTML = '<b>Not that one.</b> Try again.'; why.hidden = false; if (N.on) N.play(null, [{ text: 'Not that one. Try again.' }]); }
       }));
     },
     pledge(el, c) {
@@ -132,7 +181,7 @@
         <div class="cert"><p class="kick">Certificate</p><p class="nm" id="cn">${esc(name) || 'Your name'}</p><p>completed all six Ride Smart e-bike safety lessons and took the pledge.</p></div>`;
       const nm = el.querySelector('#nm'), cn = el.querySelector('#cn');
       nm.addEventListener('input', () => { cn.textContent = nm.value.trim() || 'Your name'; store.set('rs-name', nm.value.trim()); setReady(!!nm.value.trim()); });
-      setReady(!!name); next.textContent = 'I take the pledge';
+      setReady(!!name); next.textContent = 'I take the pledge'; parts = () => [{ text: 'The Ride Smart pledge. Say it with me.' }, ...P('.pledge li', el), { text: 'Type your name for your certificate.' }];
     },
     done(el, c) {
       const done = store.get('rs-done', []); if (!done.includes(lesson.n)) { done.push(lesson.n); store.set('rs-done', done); }
@@ -142,9 +191,11 @@
         const name = store.get('rs-name', 'Ride Smart rider');
         el.innerHTML = `<p class="kick">Course complete</p><h1 class="done-big">You're ride ready.</h1>${score}<div class="cert"><p class="kick">Certificate</p><p class="nm">${esc(name)}</p><p>completed all six Ride Smart e-bike safety lessons and took the pledge. ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p></div><div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px"><button type="button" class="btn btn-vis" id="dl">Download certificate</button><a class="btn btn-ghost" href="../parents/">Show your parent the gear list</a></div>`;
         el.querySelector('#dl').addEventListener('click', () => certificate(name));
+        parts = () => [{ text: 'You did it! You finished Ride Smart. Download your certificate and show a grown-up.' }];
         next.textContent = 'Back to home'; onNext = () => { location.href = '../index.html'; };
       } else {
         el.innerHTML = `<p class="kick">Lesson ${lesson.n} of 6</p><h1 class="done-big">Done.</h1>${score}${nl ? `<a class="done-next" href="#${nl.n}"><div><small>Up next · ${nl.mins} min</small><b>${nl.title}</b></div><span class="icon-btn" style="background:var(--vis)">${arrow}</span></a>` : ''}`;
+        parts = () => [{ text: `Nice work! You finished lesson ${lesson.n}.${nl ? ' Next up: ' + nl.title + '.' : ''}` }];
         next.textContent = nl ? `Lesson ${nl.n}` : 'Home'; onNext = () => { nl ? (location.hash = '#' + nl.n) : (location.href = '../index.html'); };
       }
     },
@@ -173,13 +224,11 @@
   });
   back.addEventListener('click', () => { if (idx) go(idx - 1); });
   speakBtn.addEventListener('click', () => {
-    if (!('speechSynthesis' in window)) return;
-    if (speechSynthesis.speaking) { speechSynthesis.cancel(); speakBtn.setAttribute('aria-pressed', 'false'); return; }
-    const card = stage.querySelector('.card'); if (!card) return;
-    const parts = [...card.querySelectorAll('h1,h2,.body,.pts b,.pts span,.tip,.opt,.q,.pledge li,.tile b,.tile small:not([hidden])')].map(e => e.textContent.trim()).filter(Boolean);
-    const u = new SpeechSynthesisUtterance(parts.join('. ').replace(/\.\./g, '.')); u.rate = 1; u.onend = u.onerror = () => speakBtn.setAttribute('aria-pressed', 'false');
-    speakBtn.setAttribute('aria-pressed', 'true'); speechSynthesis.speak(u);
+    if (speakBtn.getAttribute('aria-pressed') === 'true') return N.stop();
+    if (lesson) N.play(lesson.cards[idx].audio, parts());
   });
+  const snd = document.getElementById('sound');
+  if (snd) { const lab = () => { snd.textContent = N.on ? 'Sound on' : 'Sound off'; snd.setAttribute('aria-pressed', N.on); }; lab(); snd.addEventListener('click', () => { N.toggle(); lab(); }); }
   addEventListener('keydown', e => {
     if (!lesson || e.target.matches('input,textarea')) return;
     if (e.key === 'ArrowRight' && ready) next.click();

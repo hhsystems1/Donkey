@@ -10,8 +10,8 @@
     budget = b.dataset.b; document.querySelectorAll('#kitBudget button').forEach(x => x.setAttribute('aria-pressed', x === b));
   }));
   const helmetFor = cm => cm < 52 ? ['Youth S', '48–52 cm'] : cm < 54 ? ['Youth M', '52–54 cm'] : cm < 56 ? ['Youth L', '54–56 cm'] : cm < 58 ? ['Adult S/M', '55–58 cm'] : ['Adult M/L', '57–61 cm'];
-  const headEst = age => ({ 10: 53.5, 11: 54, 12: 54.5, 13: 55, 14: 55.5, 15: 56 })[age] || 54.5;
-  const padSize = age => age <= 11 ? 'Youth M' : age <= 13 ? 'Youth L' : 'Adult S';
+  const headEst = age => ({ 7: 52, 8: 52.5, 9: 53, 10: 53.5, 11: 54, 12: 54.5, 13: 55, 14: 55.5 })[age] || 53.5;
+  const padSize = age => age <= 8 ? 'Youth S' : age <= 10 ? 'Youth M' : age <= 13 ? 'Youth L' : 'Adult S';
   const PRICES = {
     save: { helmet: [45, 70], pads: [20, 35], gloves: [10, 18], lights: [15, 25], bell: [8, 12], vest: [10, 15] },
     mid: { helmet: [70, 110], pads: [30, 50], gloves: [15, 25], lights: [25, 40], bell: [10, 15], vest: [12, 20] },
@@ -24,7 +24,7 @@
     const items = [
       ['Helmet, ' + hs, `Fits ${hr}. ${measured ? `Sized from your ${cm} cm measurement.` : `Estimated from age (about ${cm} cm). Measure to confirm.`} CPSC label required; NTA 8776 recommended for e-bikes.${budget === 'best' ? ' Add a MIPS liner.' : ''}`, P.helmet],
       ['Knee and elbow pads, ' + padSize(age), 'Most sets include both. Firm shells, snug straps.', P.pads],
-      ['Gloves, ' + (age <= 11 ? 'Youth M' : 'Youth L'), 'Padded palms. Full-finger for cooler weather.', P.gloves],
+      ['Gloves, ' + (age <= 8 ? 'Youth S' : age <= 10 ? 'Youth M' : 'Youth L'), 'Padded palms. Full-finger for cooler weather.', P.gloves],
       ['Lights, white front and red rear', 'USB-rechargeable sets are easiest. Required after dark in many states.', P.lights],
       ['Bell', 'Loud enough to be heard by people walking.', P.bell],
       ['Bright or reflective layer', 'A vest or jacket with reflective strips.', P.vest],
