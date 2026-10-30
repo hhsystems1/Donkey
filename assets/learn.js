@@ -88,10 +88,11 @@
     (TYPES[c.t] || TYPES.learn)(el, c);
     stage.replaceChildren(el);
     if (idx === total - 1 && c.t !== 'done') next.textContent = 'Finish';
-    sync(); scrollTo(0, 0);
+    sync();
     N.auto(c.audio, parts());
     el.querySelector('h1,h2')?.setAttribute('tabindex', '-1');
     if (dir) el.querySelector('h1,h2')?.focus({ preventScroll: true });
+    scrollTo(0, 0); requestAnimationFrame(() => scrollTo(0, 0));
   }
   const sync = () => { next.disabled = !ready; };
   const setReady = v => { ready = v; sync(); };
@@ -235,6 +236,7 @@
     if (e.key === 'ArrowRight' && ready) next.click();
     if (e.key === 'ArrowLeft') back.click();
   });
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   addEventListener('hashchange', route);
   route();
 })();
