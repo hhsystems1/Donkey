@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="https://images.unsplash.com/photo-1751621573600-87de62f3eff3?auto=format&fit=crop&w=1800&q=70">
-<link rel="stylesheet" href="assets/site.css?v=2">
+<link rel="stylesheet" href="assets/site.css?v=3">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -31,12 +31,24 @@
     <div class="wrap">
       <p class="kick rise"><i></i>E-bike safety · Ages 7–12</p>
       <h1 class="h-xl rise" style="--d:1">Ride further. Ride smart.</h1>
-      <p class="lede rise" style="--d:2">An e-bike is heavier and quicker than a regular bike. Six short lessons, one idea at a time, with a voice that reads every card out loud. Games, quick checks and a certificate at the end.</p>
+      <p class="lede rise" style="--d:2">For parents who want their kid to really get it: road rules, the right gear, bike checks and battery safety. Six short guided lessons for kids 7 to 12, read out loud, with games, quick checks and a certificate.</p>
       <div class="cta rise" style="--d:3">
-        <a class="btn btn-vis" href="learn/#1">Start lesson 1 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="btn btn-ghost" href="parents/">I'm a parent</a>
+        <a class="btn btn-vis" href="#paths">Find your starting point <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost" href="learn/#1">Start lesson 1</a>
       </div>
       <div class="facts rise" style="--d:4"><span>6 lessons</span><span>Every card read out loud</span><span>Certificate at the end</span></div>
+    </div>
+  </section>
+
+  <section class="sec paths" id="paths">
+    <div class="wrap paths-grid">
+      <div>
+        <p class="kick mute rv">Start here</p>
+        <h2 class="h-l rv" style="margin-top:14px">What brings you here?</h2>
+        <p class="lede mute rv" style="margin-top:16px">Pick the one that sounds like you. You'll get a three-step plan with a button for each step.</p>
+        <ul class="choices rv"></ul>
+      </div>
+      <div class="plan-col"><div class="plan" hidden aria-live="polite"></div><div class="plan-empty"><p class="kick mute">Your plan</p><p>Pick what brings you here and your steps show up here.</p><a class="btn btn-ink" href="start/">Or take the 2-minute readiness check</a></div></div>
     </div>
   </section>
 
@@ -87,6 +99,8 @@
   </div>
 </footer>
 <script src="assets/lessons.js?v=2"></script>
+<script src="assets/paths.js?v=1"></script>
+<script src="assets/home-paths.js?v=1"></script>
 <script src="assets/home.js?v=1"></script>
 </body>
 </html>
