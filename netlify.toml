@@ -1,7 +1,21 @@
 [build]
   publish = "."
 
+# old URLs from the first version
 [[redirects]]
-  from = "/"
-  to = "/interactive-web-course.html"
-  status = 200
+  from = "/course/*"
+  to = "/learn/"
+  status = 301
+[[redirects]]
+  from = "/gear/*"
+  to = "/parents/#helmet"
+  status = 301
+[[redirects]]
+  from = "/interactive-web-course.html"
+  to = "/"
+  status = 301
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

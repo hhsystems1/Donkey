@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For parents · Ride Smart</title>
+<meta name="description" content="E-bike safety for parents of riders 10 to 14: picking a helmet, a sized gear list with a budget, a recall check, state e-bike laws and battery charging rules.">
+<meta name="theme-color" content="#f3f1ea">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=1">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../index.html"><b><svg viewBox="0 0 24 24" fill="#d4ff3f" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></b>Ride Smart</a>
+    <nav class="nav" aria-label="Main">
+      <a class="hide-s" href="../index.html#lessons">Lessons</a>
+      <a href="../parents/" aria-current="page">For parents</a>
+      <a class="btn btn-vis" href="../learn/#1">Start</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="p-hero">
+    <div class="wrap">
+      <p class="kick mute"><i></i>For parents</p>
+      <h1 class="h-l">The parent side of the e-bike.</h1>
+      <p class="lede mute">Your rider takes the lessons. These are the decisions they can't make alone: what to buy, whether the bike is safe, and what the law allows where you live.</p>
+      <nav class="jump" aria-label="On this page">
+        <a href="#helmet">Helmet</a><a href="#kit">Gear list</a><a href="#recall">Recall check</a><a href="#laws">State laws</a><a href="#charging">Charging</a><a href="#sources">Sources</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="p-sec" id="helmet">
+    <div class="wrap p-grid">
+      <div>
+        <p class="kick mute">01 · Helmet</p>
+        <h2 style="margin-top:12px">Buy for fit, not for the brand.</h2>
+        <p class="lede mute">A helmet only protects if it fits this head, carries the right label, and suits how they ride. Price and brand don't tell you any of that.</p>
+      </div>
+      <div>
+        <div class="panel">
+          <ol class="steps">
+            <li><div><b>Measure their head</b><span>Soft tape around the head, just above the eyebrows. Buy by centimeters, not by age.</span></div></li>
+            <li><div><b>Check the label inside</b><span>U.S. helmets must carry a CPSC sticker. NTA 8776 means it was also tested at e-bike speeds, worth it for Class 2 and 3 bikes.</span></div></li>
+            <li><div><b>Try it on together</b><span>Level, straps in a V under each ear, one or two fingers under the buckle, no sliding when they shake their head. Lesson 1 walks your rider through it.</span></div></li>
+            <li><div><b>Check for recalls</b><span>Search the exact model on the CPSC recall site before you buy.</span></div></li>
+          </ol>
+        </div>
+        <p class="kick mute" style="margin:34px 0 12px">Helmets worth a look</p>
+        <div class="panel pick"><span class="tag">Kids' bike helmet</span><h3>woom READY</h3><ul><li>Sizes XS, S and M, for smaller heads</li><li>Made for pedal bikes; don't assume it's rated for e-bike speeds</li></ul></div>
+        <div class="panel pick"><span class="tag">Commuter · e-bike rated</span><h3>Bern Hudson</h3><ul><li>NTA 8776 certified, MIPS liner, rear light built in</li><li>Confirm the U.S. version carries the CPSC label and fits a youth head</li></ul></div>
+        <div class="panel pick"><span class="tag">Commuter · e-bike rated</span><h3>ABUS Pedelec 2.0</h3><ul><li>CPSC and NTA 8776, sizes M and L</li><li>Adult sizing; an oversized adult helmet is not a substitute for the right youth size</li></ul></div>
+        <p class="note">These are starting points from manufacturer specs, not products we've tested. We have no affiliate links; if that changes, we'll say so, and a commission won't decide what's listed.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-sec" id="kit">
+    <div class="wrap p-grid">
+      <div>
+        <p class="kick mute">02 · Gear list</p>
+        <h2 style="margin-top:12px">Their kit, sized and priced.</h2>
+        <p class="lede mute">Enter your rider's details and get a full gear list with sizes and a budget range. Nothing you type leaves this page.</p>
+      </div>
+      <div class="panel">
+        <div class="form-grid">
+          <label class="fld">Rider's age<select id="kitAge"><option>10</option><option>11</option><option selected>12</option><option>13</option><option>14</option><option>15</option></select></label>
+          <label class="fld">Head size <small>(cm, optional)</small><input id="kitHead" type="number" inputmode="decimal" min="44" max="64" step="0.5" placeholder="e.g. 54"></label>
+          <div class="fld full">Budget<div class="seg" id="kitBudget"><button type="button" data-b="save" aria-pressed="false">Essentials</button><button type="button" data-b="mid" aria-pressed="true">Balanced</button><button type="button" data-b="best" aria-pressed="false">Best protection</button></div></div>
+        </div>
+        <button type="button" class="btn btn-ink" id="kitBuild">Build the list</button>
+        <div class="result" id="kitResult"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-sec" id="recall">
+    <div class="wrap p-grid">
+      <div>
+        <p class="kick mute">03 · Recall check</p>
+        <h2 style="margin-top:12px">Is the bike recalled?</h2>
+        <p class="lede mute">Brand and model are printed on the frame. The battery code is on a sticker on the battery. This checks against 6 CPSC e-bike recalls and warnings, last reviewed October 22, 2026.</p>
+      </div>
+      <div class="panel">
+        <div class="form-grid">
+          <label class="fld">Brand<select id="rcBrand"><option value="">Choose…</option><option>Rad Power Bikes</option><option>Ridstar</option><option>Specialized</option><option>Trek</option><option>Electra</option><option>Urban Arrow</option><option>Super73</option><option>Lectric</option><option>Aventon</option><option>Schwinn</option><option>Razor</option><option value="other">Another brand</option></select></label>
+          <label class="fld">Model<input id="rcModel" placeholder="e.g. RadRunner 2"></label>
+          <label class="fld">Model year<select id="rcYear"><option value="">Not sure</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option></select></label>
+          <label class="fld">Battery code <small>(optional)</small><input id="rcBattery" placeholder="e.g. RP-1304"></label>
+        </div>
+        <button type="button" class="btn btn-ink" id="rcCheck">Check the bike</button>
+        <div class="result" id="rcResult" aria-live="polite"></div>
+        <p class="note">"No match" means it isn't on this list, not that it has never been recalled. Always confirm on <a href="https://www.cpsc.gov/search?search_api_fulltext=e-bike" rel="noopener">CPSC.gov</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-sec" id="laws">
+    <div class="wrap p-grid">
+      <div>
+        <p class="kick mute">04 · State laws</p>
+        <h2 style="margin-top:12px">What's legal where you live.</h2>
+        <p class="lede mute">E-bike law is mostly set by each state, and towns can add their own rules on top. Pick your state for the basics.</p>
+      </div>
+      <div class="panel law">
+        <label class="fld">Your state<select id="lawState"><option value="">Choose your state…</option></select></label>
+        <div class="result" id="lawResult" aria-live="polite"></div>
+        <p class="note">General information, not legal advice. Researched October 18, 2026 from PeopleForBikes state guides and the NCSL e-bike law primer. Laws change often; confirm with your state DMV or city hall.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-sec" id="charging">
+    <div class="wrap p-grid">
+      <div>
+        <p class="kick mute">05 · Battery</p>
+        <h2 style="margin-top:12px">Charging is your job.</h2>
+        <p class="lede mute">Lithium e-bike batteries cause house fires when they're damaged, overcharged or charged with the wrong gear. These habits prevent most of it.</p>
+      </div>
+      <div class="panel">
+        <ol class="steps">
+          <li><div><b>Use the charger that came with the bike</b><span>Or a replacement the manufacturer approves. Never a generic one that happens to fit.</span></div></li>
+          <li><div><b>Charge while someone's awake</b><span>Not overnight, and unplug when it's full.</span></div></li>
+          <li><div><b>Hard surface, away from exits</b><span>Not on a bed or couch, and not blocking the way out of a room.</span></div></li>
+          <li><div><b>Retire a damaged battery</b><span>Swollen, cracked, leaking or smelling odd: stop using it and take it to household hazardous waste. Never the trash.</span></div></li>
+          <li><div><b>Look for UL 2849 or UL 2271</b><span>The safety certifications for e-bike electrical systems and batteries.</span></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-sec" id="sources">
+    <div class="wrap p-grid">
+      <div>
+        <p class="kick mute">Sources</p>
+        <h2 style="margin-top:12px">Go to the source.</h2>
+      </div>
+      <ul class="res">
+        <li><a href="https://www.cpsc.gov/Safety-Education/Safety-Guides/Sports-Fitness-and-Recreation/Bicycles/Which-Helmet-for-Which-Activity" rel="noopener">CPSC: which helmet for which activity <span>cpsc.gov</span></a></li>
+        <li><a href="https://www.cpsc.gov/Recalls" rel="noopener">CPSC recall search <span>cpsc.gov</span></a></li>
+        <li><a href="https://www.helmet.beam.vt.edu/bicycle-helmet-ratings.html" rel="noopener">Virginia Tech bike helmet ratings <span>vt.edu</span></a></li>
+        <li><a href="https://www.nhtsa.gov/bicycle-safety" rel="noopener">NHTSA bicycle safety and helmet fit <span>nhtsa.gov</span></a></li>
+        <li><a href="https://www.peopleforbikes.org/electric-bikes/state-laws" rel="noopener">State e-bike laws <span>peopleforbikes.org</span></a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <a class="logo" href="../index.html"><b><svg viewBox="0 0 24 24" fill="#d4ff3f" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></b>Ride Smart</a>
+    <p>General safety education, not legal advice. Product details come from manufacturers and can change.</p>
+  </div>
+</footer>
+<script src="../assets/laws-data.js?v=1"></script>
+<script src="../assets/recalls-data.js?v=1"></script>
+<script src="../assets/parents.js?v=1"></script>
+</body>
+</html>

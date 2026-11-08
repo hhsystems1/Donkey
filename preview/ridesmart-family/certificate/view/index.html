@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css?v=4">
+<link rel="stylesheet" href="../../assets/family.css?v=1">
+<title>Certificate · Ride Smart</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f3f1ea">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../../"><b><svg viewBox="0 0 24 24" fill="#d4ff3f" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></b>Ride Smart</a>
+    <nav class="nav" aria-label="Main">
+      <a class="hide-s" href="../../gear/">Gear</a>
+      <a class="hide-s" href="../../certificate/">Certificate</a>
+      <a class="btn btn-vis" href="../../check/">Readiness check</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="sec" style="padding-top:clamp(110px,14vw,150px)">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:24px;max-width:900px">
+    <div id="view" aria-live="polite"><p class="lede mute">Loading the certificate…</p></div>
+    <form class="signup no-print" id="verifyForm" hidden>
+      <h3>Check a certificate</h3>
+      <label class="fld">Certificate ID<input id="vid" placeholder="RS-XXXXXXXX" autocomplete="off" required></label>
+      <button class="btn btn-ink" type="submit">Check it</button>
+    </form>
+  </div>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <a class="logo" href="../../"><b><svg viewBox="0 0 24 24" fill="#d4ff3f" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></b>Ride Smart</a>
+    <p>General safety education, not legal advice. Some gear links earn us a small commission at no cost to you.</p>
+    <p><a href="../../privacy/">Privacy</a> · <a href="../../gear/">Gear</a> · <a href="../../certificate/">Certificate</a></p>
+  </div>
+</footer>
+<script src="../../assets/config.js?v=1"></script>
+<script src="../../assets/cert-view.js?v=1"></script>
+</body>
+</html>
