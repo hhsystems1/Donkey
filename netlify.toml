@@ -1,5 +1,6 @@
 [build]
   publish = "."
+  functions = "netlify/functions"
 
 # Recorded narration: /rec/* proxies to the Ride Smart recordings host
 # (hhsdemos #17 source). No audio files are stored in this repo.
