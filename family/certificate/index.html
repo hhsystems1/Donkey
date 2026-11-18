@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=4">
+<link rel="stylesheet" href="../assets/family.css?v=1">
+<title>Official certificate · Ride Smart</title>
+<meta name="description" content="Get your rider's official Ride Smart certificate and wallet-size rider card after they finish the six free lessons.">
+<meta name="theme-color" content="#0f1110">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../"><b><svg viewBox="0 0 24 24" fill="#d4ff3f" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></b>Ride Smart</a>
+    <nav class="nav" aria-label="Main">
+      <a class="hide-s" href="../gear/">Gear</a>
+      <a class="hide-s" href="../certificate/">Certificate</a>
+      <a class="btn btn-vis" href="../check/">Readiness check</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <section class="sec dark on-dark" style="padding-top:clamp(110px,14vw,150px)">
+    <div class="wrap offer">
+      <div>
+        <p class="kick"><i></i>Official certificate</p>
+        <h1 class="h-l" style="margin-top:14px">They earned it. Make it official.</h1>
+        <p class="lede mute" style="margin-top:18px">The six lessons are free. The official certificate is <b style="color:var(--paper)" id="priceTxt">$12</b>, one time, and it's how Ride Smart stays free.</p>
+        <ul class="inc">
+          <li>Printable certificate with their name and completion date</li>
+          <li>Wallet-size rider card for their backpack</li>
+          <li>A certificate ID schools and bike shops can check online</li>
+          <li>Emailed to you, so you can print it again anytime</li>
+        </ul>
+      </div>
+      <div class="cert-mock" aria-live="polite">
+        <small>RIDE SMART · CERTIFICATE</small>
+        <p class="nm" id="mockName">Your rider</p>
+        <p>completed all six Ride Smart e-bike safety lessons and took the rider pledge.</p>
+        <small id="mockDate">COMPLETION DATE</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="order">
+    <div class="wrap p-grid">
+      <div>
+        <p class="kick mute">Order</p>
+        <h2 style="margin-top:12px">Get the certificate.</h2>
+        <p class="lede mute">Check the name as you want it printed. We'll email the certificate to you.</p>
+        <p class="note">Haven't finished yet? The certificate is for riders who complete all six lessons. <a href="../go/">Open the course</a>.</p>
+      </div>
+      <form class="signup" id="orderForm" novalidate>
+        <div class="form-grid">
+          <label class="fld full">Name on the certificate<input id="kidName" name="kid" maxlength="40" required autocomplete="off" placeholder="First and last name"></label>
+          <label class="fld">Completed on<input id="doneDate" name="done" type="date" required></label>
+          <label class="fld">Your email<input name="email" type="email" autocomplete="email" required></label>
+        </div>
+        <label class="check"><input type="checkbox" name="adult" required><span>I'm the parent or guardian, and I'm 18 or older. My rider finished all six lessons.</span></label>
+        <p class="sr"><label>Leave empty <input name="hp" tabindex="-1" autocomplete="off"></label></p>
+        <button class="btn btn-ink" type="submit" id="buyBtn">Continue to payment · $12</button>
+        <p class="msg" role="status"></p>
+        <p class="note" style="margin-top:0">One-time payment. You'll also get a few short Ride Smart emails; unsubscribe anytime. <a href="../privacy/">Privacy</a></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap p-grid">
+      <div><p class="kick mute">Questions</p><h2 style="margin-top:12px">About the certificate.</h2></div>
+      <div class="faq">
+        <details><summary>Is it a license?</summary><p>No. It shows your rider finished the Ride Smart course. Some schools and bike shops ask for a safety course; check with yours.</p></details>
+        <details><summary>How do schools check it?</summary><p>Each certificate has an ID. Anyone can enter it at the verify page and see the rider's first name and completion date. Nothing else is shown.</p></details>
+        <details><summary>What if I typed the name wrong?</summary><p>Reply to the certificate email and we'll fix it.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <a class="logo" href="../"><b><svg viewBox="0 0 24 24" fill="#d4ff3f" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></b>Ride Smart</a>
+    <p>General safety education, not legal advice. Some gear links earn us a small commission at no cost to you.</p>
+    <p><a href="../privacy/">Privacy</a> · <a href="../gear/">Gear</a> · <a href="../certificate/">Certificate</a></p>
+  </div>
+</footer>
+<script src="../assets/config.js?v=1"></script>
+<script src="../assets/certificate.js?v=1"></script>
+</body>
+</html>

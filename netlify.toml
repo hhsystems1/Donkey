@@ -1,6 +1,13 @@
 [build]
   publish = "."
 
+# Recorded narration: /rec/* proxies to the Ride Smart recordings host
+# (hhsdemos #17 source). No audio files are stored in this repo.
+[[redirects]]
+  from = "/rec/*"
+  to = "https://6ae29c92f32faa6df62719b9--ride-smart-adventure.netlify.app/course/media/:splat"
+  status = 200
+
 # old URLs from the first version
 [[redirects]]
   from = "/course/*"
@@ -8,7 +15,7 @@
   status = 301
 [[redirects]]
   from = "/gear/*"
-  to = "/parents/#helmet"
+  to = "/family/gear/#helmet"
   status = 301
 [[redirects]]
   from = "/interactive-web-course.html"
