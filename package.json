@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  },
+  "description": "Ride Smart \u2014 e-bike safety course for kids 7-12, with a parent funnel. Static pages plus Netlify Functions for the parent backend.",
+  "name": "donkey",
+  "private": true
+}
